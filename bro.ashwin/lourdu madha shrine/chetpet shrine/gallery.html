@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Our Lady of Lourdes Shrine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/logo.jpg" alt="Our Lady of Lourdes Shrine Logo">
+                </div>
+                <div class="header-text">
+                    <h1>OUR LADY OF LOURDES SHRINE</h1>
+                    <p>Vellore Diocese, Chetpet, India</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="mass-timing.html"><i class="fas fa-clock"></i> Mass Timing</a></li>
+                <li><a href="madha-malai.html"><i class="fas fa-mountain"></i> Madha Malai</a></li>
+                <li><a href="gallery.html" class="active"><i class="fas fa-images"></i> Gallery</a></li>
+
+                <li><a href="jubilee.html"><i class="fas fa-star"></i> 125th Year Jubilee</a></li>
+                <li><a href="substations.html"><i class="fas fa-map-marker-alt"></i> Substations</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar"></i> Upcoming Events</a></li>
+                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Photo Gallery</h1>
+                <p>Moments of faith and devotion from Our Lady of Lourdes Shrine</p>
+            </div>
+        </section>
+
+        <!-- Gallery Albums -->
+        <section class="gallery-section">
+            <div class="container">
+                <div class="albums-container">
+                    <div class="albums-grid" id="publicAlbumsGrid">
+                        <!-- Albums will be loaded dynamically from admin panel -->
+                    </div>
+                </div>
+
+                <!-- Selected Album Images -->
+                <div class="album-images-container" id="publicAlbumImagesContainer" style="display: none;">
+                    <div class="album-header">
+                        <h2 id="publicSelectedAlbumTitle"></h2>
+                        <button class="back-btn" onclick="showPublicAlbums()">
+                            <i class="fas fa-arrow-left"></i> Back to Albums
+                        </button>
+                    </div>
+                    <div class="gallery-grid" id="publicAlbumImagesGrid">
+                        <!-- Album images will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Upload Section (for admin) -->
+        <section class="upload-section" id="uploadSection" style="display: none;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Upload New Photos</h2>
+                    <div class="divider"></div>
+                </div>
+                
+                <div class="upload-form">
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag and drop images here or click to select</p>
+                        <input type="file" id="imageUpload" multiple accept="image/*" hidden>
+                        <button type="button" class="upload-btn" onclick="document.getElementById('imageUpload').click()">
+                            Select Images
+                        </button>
+                    </div>
+                    
+                    <div class="upload-options">
+                        <div class="form-group">
+                            <label for="imageCategory">Category</label>
+                            <select id="imageCategory">
+                                <option value="shrine">Shrine Architecture</option>
+                                <option value="celebrations">Celebrations</option>
+                                <option value="community">Community Events</option>
+                                <option value="historical">Historical</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="imageTitle">Title</label>
+                            <input type="text" id="imageTitle" placeholder="Enter image title">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="imageDescription">Description</label>
+                            <textarea id="imageDescription" rows="3" placeholder="Enter image description"></textarea>
+                        </div>
+                        
+                        <button type="button" class="save-btn" onclick="uploadImages()">
+                            <i class="fas fa-upload"></i> Upload Images
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <img id="lightboxImage" src="" alt="">
+            <div class="lightbox-caption">
+                <h3 id="lightboxTitle"></h3>
+                <p id="lightboxDescription"></p>
+            </div>
+            <div class="lightbox-controls">
+                <button class="lightbox-btn" onclick="previousImage()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="lightbox-btn" onclick="nextImage()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Our Lady of Lourdes Shrine<br>Chetpet, Tiruvannamalai Dt - 606 801</p>
+                    <p><i class="fas fa-phone"></i> +91 9442291509, +91 6374827409</p>
+                    <p><i class="fas fa-envelope"></i> ourladyoflourdesshrinechetpet@gmail.com</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <div class="quick-links">
+                        <a href="about.html">About Us</a>
+                        <a href="mass-timing.html">Mass Timing</a>
+                        <a href="gallery.html">Gallery</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Our Lady of Lourdes Shrine, Chetpet. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Load albums from admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPublicAlbums();
+        });
+
+        // Load albums for public gallery
+        function loadPublicAlbums() {
+            const albumsGrid = document.getElementById('publicAlbumsGrid');
+            if (!albumsGrid) return;
+
+            console.log('Loading gallery albums for public view...');
+
+            // Try to load from Flask backend first
+            fetch('/api/gallery/albums')
+                .then(response => {
+                    console.log('Flask backend response:', response.ok);
+                    return response.json();
+                })
+                .then(albums => {
+                    console.log('Albums from Flask backend:', albums.length);
+                    renderAlbums(albums);
+                })
+                .catch(error => {
+                    console.error('Flask backend not available, trying content.json:', error);
+                    
+                    // Fallback to content.json
+                    fetch('data/content.json')
+                        .then(response => {
+                            console.log('Content.json response:', response.ok);
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Content.json data:', data);
+                            const albums = data.galleryAlbums || [];
+                            console.log('Albums found in content.json:', albums.length);
+                            renderAlbums(albums);
+                        })
+                        .catch(contentError => {
+                            console.error('Error loading content.json:', contentError);
+                            // Last fallback to localStorage
+                            const albums = JSON.parse(localStorage.getItem('galleryAlbums') || '[]');
+                            console.log('Fallback to localStorage, albums:', albums.length);
+                            renderAlbums(albums);
+                        });
+                });
+        }
+
+        function renderAlbums(albums) {
+            const albumsGrid = document.getElementById('publicAlbumsGrid');
+            if (!albumsGrid) return;
+
+            if (albums.length === 0) {
+                albumsGrid.innerHTML = `
+                    <div class="no-albums-public">
+                        <i class="fas fa-images"></i>
+                        <h3>No Photo Albums Yet</h3>
+                        <p>Photo albums will appear here once they are created by the admin.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            albumsGrid.innerHTML = albums.map(album => `
+                <div class="public-album-card text-only" onclick="viewPublicAlbum('${album.id}')">
+                    <div class="album-content">
+                        <div class="album-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="album-info">
+                            <h3>${album.name}</h3>
+                            <p>${album.images.length} photos</p>
+                            ${album.description ? `<p class="album-desc">${album.description}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Store albums globally for viewPublicAlbum function
+            window.loadedAlbums = albums;
+        }
+
+        // View album images
+        function viewPublicAlbum(albumId) {
+            // Use globally stored albums or fallback to localStorage
+            let albums = window.loadedAlbums || JSON.parse(localStorage.getItem('galleryAlbums') || '[]');
+            
+            if (albums.length === 0) {
+                // Try loading from content.json as fallback
+                fetch('data/content.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        albums = data.galleryAlbums || [];
+                        const album = albums.find(a => a.id === albumId);
+                        if (album) {
+                            renderAlbumImages(album);
+                        }
+                    })
+                    .catch(() => {
+                        console.error('Could not load album data');
+                    });
+                return;
+            }
+            
+            const album = albums.find(a => a.id === albumId);
+            if (!album) return;
+            
+            renderAlbumImages(album);
+        }
+
+        function renderAlbumImages(album) {
+            document.getElementById('publicSelectedAlbumTitle').textContent = album.name;
+            document.querySelector('.albums-container').style.display = 'none';
+            document.getElementById('publicAlbumImagesContainer').style.display = 'block';
+
+            const imagesGrid = document.getElementById('publicAlbumImagesGrid');
+            if (album.images.length === 0) {
+                imagesGrid.innerHTML = '<div class="no-images">No images in this album yet.</div>';
+                return;
+            }
+
+            imagesGrid.innerHTML = album.images.map(image => `
+                <div class="gallery-item">
+                    <img src="${image.src}" alt="${image.name}">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>${image.name}</h3>
+                        </div>
+                        <button class="view-btn" onclick="openLightbox('${image.src}', '${image.name}')">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Show all albums
+        function showPublicAlbums() {
+            document.querySelector('.albums-container').style.display = 'block';
+            document.getElementById('publicAlbumImagesContainer').style.display = 'none';
+        }
+
+        // Lightbox functionality
+        function openLightbox(imageSrc, title) {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox-overlay';
+            lightbox.innerHTML = `
+                <div class="lightbox-content">
+                    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+                    <img src="${imageSrc}" alt="${title}">
+                    <div class="lightbox-caption">
+                        <h3>${title}</h3>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(lightbox);
+            document.body.style.overflow = 'hidden';
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+        }
+
+        function closeLightbox() {
+            const lightbox = document.querySelector('.lightbox-overlay');
+            if (lightbox) {
+                lightbox.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

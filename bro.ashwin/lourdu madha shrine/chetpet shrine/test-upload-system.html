@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image Upload</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 10px; background: #007cba; color: white; border: none; cursor: pointer; }
+        .result { margin: 10px 0; padding: 10px; background: #f0f0f0; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Image Upload System Test</h1>
+    
+    <div class="test-section">
+        <h3>Test 1: Check Current Content</h3>
+        <button onclick="testLoadContent()">Load Current Content.json</button>
+        <div id="contentResult" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test 2: Test API Endpoint</h3>
+        <button onclick="testAPI()">Test API Update</button>
+        <div id="apiResult" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test 3: Add Sample Gallery Album</h3>
+        <button onclick="testGalleryUpload()">Add Sample Album</button>
+        <div id="galleryResult" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test 4: Add Sample Slideshow</h3>
+        <button onclick="testSlideshowUpload()">Add Sample Slide</button>
+        <div id="slideshowResult" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test 5: View Results</h3>
+        <a href="gallery.html" target="_blank">📸 View Gallery</a> | 
+        <a href="index.html" target="_blank">🏠 View Home Page</a>
+    </div>
+
+    <script>
+        async function testLoadContent() {
+            const result = document.getElementById('contentResult');
+            try {
+                const response = await fetch('data/content.json');
+                const data = await response.json();
+                result.className = 'result success';
+                result.innerHTML = `
+                    <strong>✅ Success!</strong><br>
+                    Gallery Albums: ${data.galleryAlbums?.length || 0}<br>
+                    Home Slides: ${data.homeSlides?.length || 0}<br>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function testAPI() {
+            const result = document.getElementById('apiResult');
+            try {
+                const testData = {
+                    key: 'testKey',
+                    data: { test: 'API working', timestamp: new Date().toISOString() }
+                };
+                
+                const response = await fetch('/api/update-content', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testData)
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    result.className = 'result success';
+                    result.innerHTML = `<strong>✅ API Working!</strong><br>${JSON.stringify(responseData)}`;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `<strong>❌ API Error:</strong> ${response.status} - ${response.statusText}`;
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `<strong>❌ Network Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function testGalleryUpload() {
+            const result = document.getElementById('galleryResult');
+            const sampleAlbum = {
+                id: 'test-album-' + Date.now(),
+                name: 'Test Album',
+                description: 'This is a test album created by the test system',
+                images: [
+                    {
+                        id: 'test-img-1',
+                        src: 'images/slide1.jpg',
+                        name: 'Test Image 1',
+                        uploadDate: new Date().toISOString()
+                    }
+                ],
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                // Get existing albums
+                const contentResponse = await fetch('data/content.json');
+                const content = await contentResponse.json();
+                const albums = content.galleryAlbums || [];
+                albums.push(sampleAlbum);
+
+                // Update via API
+                const response = await fetch('/api/update-content', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        key: 'galleryAlbums',
+                        data: albums
+                    })
+                });
+
+                if (response.ok) {
+                    result.className = 'result success';
+                    result.innerHTML = `<strong>✅ Album Added!</strong><br>Check the gallery page to see the new album.`;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `<strong>❌ Upload Failed:</strong> ${response.status}`;
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function testSlideshowUpload() {
+            const result = document.getElementById('slideshowResult');
+            const sampleSlide = {
+                id: 'test-slide-' + Date.now(),
+                title: 'Test Slide',
+                description: 'This is a test slide created by the test system',
+                image: 'images/slide3.jpg',
+                buttonText: 'Test Button',
+                buttonLink: '#test',
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                // Get existing slides
+                const contentResponse = await fetch('data/content.json');
+                const content = await contentResponse.json();
+                const slides = content.homeSlides || [];
+                slides.push(sampleSlide);
+
+                // Update via API
+                const response = await fetch('/api/update-content', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        key: 'homeSlides',
+                        data: slides
+                    })
+                });
+
+                if (response.ok) {
+                    result.className = 'result success';
+                    result.innerHTML = `<strong>✅ Slide Added!</strong><br>Check the home page to see the new slide.`;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `<strong>❌ Upload Failed:</strong> ${response.status}`;
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `<strong>❌ Error:</strong> ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

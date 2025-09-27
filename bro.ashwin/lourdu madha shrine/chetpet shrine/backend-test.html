@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backend System Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 12px 24px; margin: 10px; background: #007cba; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        button:hover { background: #005a87; }
+        .result { margin: 10px 0; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .header { text-align: center; color: #333; margin-bottom: 30px; }
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .status-card { padding: 15px; border-radius: 5px; text-align: center; }
+        .status-good { background: #d4edda; color: #155724; }
+        .status-bad { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Flask Backend System Test</h1>
+            <h2>Our Lady of Lourdes Shrine Website</h2>
+        </div>
+
+        <div class="status-grid" id="statusGrid">
+            <!-- Status cards will be populated here -->
+        </div>
+
+        <div class="test-section">
+            <h3>📊 System Status Check</h3>
+            <button onclick="checkSystemStatus()">Check Backend Status</button>
+            <div id="statusResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📸 Gallery System Test</h3>
+            <button onclick="testGalleryAPI()">Test Gallery API</button>
+            <button onclick="loadGalleryData()">Load Gallery Albums</button>
+            <div id="galleryResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎬 Slideshow System Test</h3>
+            <button onclick="testSlideshowAPI()">Test Slideshow API</button>
+            <button onclick="loadSlideshowData()">Load Slideshow Slides</button>
+            <div id="slideshowResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Create Sample Data</h3>
+            <button onclick="createSampleAlbum()">Create Sample Album</button>
+            <button onclick="createSampleSlide()">Create Sample Slide</button>
+            <div id="sampleResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🌐 Quick Links</h3>
+            <a href="/" target="_blank" style="display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; margin: 5px; border-radius: 5px;">🏠 Home Page</a>
+            <a href="/gallery.html" target="_blank" style="display: inline-block; padding: 10px 20px; background: #17a2b8; color: white; text-decoration: none; margin: 5px; border-radius: 5px;">📸 Gallery</a>
+            <a href="/login.html" target="_blank" style="display: inline-block; padding: 10px 20px; background: #fd7e14; color: white; text-decoration: none; margin: 5px; border-radius: 5px;">🔑 Admin Panel</a>
+        </div>
+    </div>
+
+    <script>
+        let systemStatus = {
+            backend: false,
+            database: false,
+            gallery: false,
+            slideshow: false
+        };
+
+        async function updateStatusDisplay() {
+            const statusGrid = document.getElementById('statusGrid');
+            statusGrid.innerHTML = `
+                <div class="status-card ${systemStatus.backend ? 'status-good' : 'status-bad'}">
+                    <h4>🖥️ Backend Server</h4>
+                    <p>${systemStatus.backend ? '✅ Online' : '❌ Offline'}</p>
+                </div>
+                <div class="status-card ${systemStatus.database ? 'status-good' : 'status-bad'}">
+                    <h4>🗄️ Database</h4>
+                    <p>${systemStatus.database ? '✅ Connected' : '❌ Error'}</p>
+                </div>
+                <div class="status-card ${systemStatus.gallery ? 'status-good' : 'status-bad'}">
+                    <h4>📸 Gallery API</h4>
+                    <p>${systemStatus.gallery ? '✅ Working' : '❌ Error'}</p>
+                </div>
+                <div class="status-card ${systemStatus.slideshow ? 'status-good' : 'status-bad'}">
+                    <h4>🎬 Slideshow API</h4>
+                    <p>${systemStatus.slideshow ? '✅ Working' : '❌ Error'}</p>
+                </div>
+            `;
+        }
+
+        async function checkSystemStatus() {
+            const result = document.getElementById('statusResult');
+            result.innerHTML = '⏳ Checking system status...';
+            result.className = 'result info';
+
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+
+                if (response.ok) {
+                    systemStatus.backend = true;
+                    systemStatus.database = true;
+                    result.className = 'result success';
+                    result.innerHTML = `✅ Backend System Online!
+
+Status: ${data.status}
+Backend: ${data.backend}
+Albums: ${data.statistics.albums}
+Images: ${data.statistics.images}  
+Slides: ${data.statistics.slides}`;
+                } else {
+                    throw new Error(data.error || 'Status check failed');
+                }
+            } catch (error) {
+                systemStatus.backend = false;
+                systemStatus.database = false;
+                result.className = 'result error';
+                result.innerHTML = `❌ Backend System Error!
+
+Error: ${error.message}
+
+Possible solutions:
+1. Make sure Flask backend is running
+2. Check if port 5000 is available
+3. Restart flask_backend.py`;
+            }
+
+            updateStatusDisplay();
+        }
+
+        async function testGalleryAPI() {
+            const result = document.getElementById('galleryResult');
+            result.innerHTML = '⏳ Testing gallery API...';
+            result.className = 'result info';
+
+            try {
+                const response = await fetch('/api/gallery/albums');
+                const albums = await response.json();
+
+                if (response.ok) {
+                    systemStatus.gallery = true;
+                    result.className = 'result success';
+                    result.innerHTML = `✅ Gallery API Working!
+
+Found ${albums.length} albums:
+${albums.map(album => `- ${album.name} (${album.images.length} images)`).join('\n')}`;
+                } else {
+                    throw new Error('Gallery API failed');
+                }
+            } catch (error) {
+                systemStatus.gallery = false;
+                result.className = 'result error';
+                result.innerHTML = `❌ Gallery API Error: ${error.message}`;
+            }
+
+            updateStatusDisplay();
+        }
+
+        async function testSlideshowAPI() {
+            const result = document.getElementById('slideshowResult');
+            result.innerHTML = '⏳ Testing slideshow API...';
+            result.className = 'result info';
+
+            try {
+                const response = await fetch('/api/slideshow/slides');
+                const slides = await response.json();
+
+                if (response.ok) {
+                    systemStatus.slideshow = true;
+                    result.className = 'result success';
+                    result.innerHTML = `✅ Slideshow API Working!
+
+Found ${slides.length} slides:
+${slides.map(slide => `- ${slide.title}`).join('\n')}`;
+                } else {
+                    throw new Error('Slideshow API failed');
+                }
+            } catch (error) {
+                systemStatus.slideshow = false;
+                result.className = 'result error';
+                result.innerHTML = `❌ Slideshow API Error: ${error.message}`;
+            }
+
+            updateStatusDisplay();
+        }
+
+        async function createSampleAlbum() {
+            const result = document.getElementById('sampleResult');
+            result.innerHTML = '⏳ Creating sample album...';
+            result.className = 'result info';
+
+            try {
+                const response = await fetch('/api/gallery/albums', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: 'Test Album - ' + new Date().toLocaleString(),
+                        description: 'This is a test album created by the backend test system'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `✅ Sample Album Created!
+
+Album ID: ${data.album_id}
+Message: ${data.message}
+
+Now you can test adding images to this album through the admin panel.`;
+                } else {
+                    throw new Error(data.error || 'Album creation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Sample Album Creation Failed: ${error.message}`;
+            }
+        }
+
+        async function createSampleSlide() {
+            const result = document.getElementById('sampleResult');
+            result.innerHTML = '⏳ Creating sample slide...';
+            result.className = 'result info';
+
+            // Create a simple colored rectangle as base64 image
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, 800, 400);
+            gradient.addColorStop(0, '#007cba');
+            gradient.addColorStop(1, '#004d7a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 400);
+            
+            // Add text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Sample Slide', 400, 200);
+            ctx.font = '24px Arial';
+            ctx.fillText('Created by Backend Test System', 400, 250);
+            
+            const base64Image = canvas.toDataURL('image/png');
+
+            try {
+                const response = await fetch('/api/slideshow/slides', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: 'Test Slide - ' + new Date().toLocaleString(),
+                        description: 'This is a test slide created by the backend test system',
+                        image: base64Image,
+                        buttonText: 'Test Button',
+                        buttonLink: '#test',
+                        original_name: 'test_slide.png'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `✅ Sample Slide Created!
+
+Slide ID: ${data.slide_id}
+Message: ${data.message}
+
+Check the home page to see the new slide in the slideshow!`;
+                } else {
+                    throw new Error(data.error || 'Slide creation failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Sample Slide Creation Failed: ${error.message}`;
+            }
+        }
+
+        async function loadGalleryData() {
+            await testGalleryAPI();
+        }
+
+        async function loadSlideshowData() {
+            await testSlideshowAPI();
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            updateStatusDisplay();
+            checkSystemStatus();
+        });
+    </script>
+</body>
+</html>

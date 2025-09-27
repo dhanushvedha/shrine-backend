@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events - Our Lady of Lourdes Shrine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/logo.jpg" alt="Our Lady of Lourdes Shrine Logo">
+                </div>
+                <div class="header-text">
+                    <h1>OUR LADY OF LOURDES SHRINE</h1>
+                    <p>Vellore Diocese, Chetpet, India</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="mass-timing.html"><i class="fas fa-clock"></i> Mass Timing</a></li>
+                <li><a href="madha-malai.html"><i class="fas fa-mountain"></i> Madha Malai</a></li>
+                <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+
+                <li><a href="jubilee.html"><i class="fas fa-star"></i> 125th Year Jubilee</a></li>
+                <li><a href="substations.html"><i class="fas fa-map-marker-alt"></i> Substations</a></li>
+                <li><a href="events.html" class="active"><i class="fas fa-calendar"></i> Upcoming Events</a></li>
+                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Upcoming Events</h1>
+                <p>Join us in our celebrations and community activities</p>
+            </div>
+        </section>
+
+        <!-- Events List -->
+        <section class="events-list-section">
+            <div class="container">
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be loaded here from admin panel -->
+                </div>
+                <div class="no-events" id="noEventsMessage" style="display: none;">
+                    <i class="fas fa-calendar-times"></i>
+                    <h3>No Upcoming Events</h3>
+                    <p>Check back soon for new events and celebrations!</p>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Our Lady of Lourdes Shrine<br>Chetpet, Tiruvannamalai Dt - 606 801</p>
+                    <p><i class="fas fa-phone"></i> +91 9442291509, +91 6374827409</p>
+                    <p><i class="fas fa-envelope"></i> ourladyoflourdesshrinechetpet@gmail.com</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <div class="quick-links">
+                        <a href="about.html">About Us</a>
+                        <a href="mass-timing.html">Mass Timing</a>
+                        <a href="gallery.html">Gallery</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Our Lady of Lourdes Shrine, Chetpet. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Load events from admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEventsFromStorage();
+        });
+
+        function loadEventsFromStorage() {
+            const events = JSON.parse(localStorage.getItem('events') || '[]');
+            const eventsGrid = document.getElementById('eventsGrid');
+            const noEventsMessage = document.getElementById('noEventsMessage');
+
+            if (events.length === 0) {
+                eventsGrid.style.display = 'none';
+                noEventsMessage.style.display = 'block';
+                return;
+            }
+
+            eventsGrid.style.display = 'grid';
+            noEventsMessage.style.display = 'none';
+
+            // Sort events by date
+            events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            eventsGrid.innerHTML = events.map(event => `
+                <div class="event-card" data-category="${event.category}">
+                    ${event.image ? `<div class="event-image">
+                        <img src="${event.image}" alt="${event.title}">
+                    </div>` : ''}
+                    <div class="event-content">
+                        <div class="event-category ${event.category}">${event.category.charAt(0).toUpperCase() + event.category.slice(1)}</div>
+                        <h3>${event.title}</h3>
+                        <div class="event-details">
+                            <div class="detail-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>${formatDate(event.date)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>${formatTime(event.time)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${event.location}</span>
+                            </div>
+                        </div>
+                        <p class="event-description">${event.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+    </script>
+</body>
+</html>
