@@ -102,17 +102,12 @@ def save_base64_image(base64_data: str, filename_prefix: str = "image") -> Optio
         print(f"Error saving base64 image: {e}")
         return None
 
-# Path to the folder containing index.html
-frontend_folder = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    'bro.ashwin',
-    'lourdu madha shrine'  # folder containing index.html
 # API Routes
 
 @app.route('/')
 def home():
     """Serve the main website"""
-    return send_from_directory(frontend_folder, 'index.html')
+    return send_from_directory('.', 'index.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename: str):
