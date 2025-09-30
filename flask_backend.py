@@ -18,7 +18,7 @@ CORS(app)  # Enable CORS for all routes
 
 # Configuration
 UPLOAD_FOLDER = 'uploads'
-DATABASE = 'shrine_data.db'
+DATABASE = os.path.join('data', 'shrine_data.db')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
 # Create necessary directories
@@ -104,15 +104,21 @@ def save_base64_image(base64_data: str, filename_prefix: str = "image") -> Optio
 
 # API Routes
 
+
+# Path to the renamed frontend folder
+frontend_folder = os.path.join(os.path.dirname(__file__), 'frontend')
+
+# Serve homepage
 @app.route('/')
 def home():
     """Serve the main website"""
-    return send_from_directory('.', 'index.html')
+    return send_from_directory(frontend_folder, 'index.html')
 
+# Serve all frontend static files (CSS, JS, images)
 @app.route('/<path:filename>')
 def serve_static(filename: str):
-    """Serve static files"""
-    return send_from_directory('.', filename)
+    """Serve static files from frontend folder"""
+    return send_from_directory(frontend_folder, filename)
 
 @app.route('/uploads/<path:filename>')
 def serve_uploads(filename: str):
