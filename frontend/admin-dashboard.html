@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Our Lady of Lourdes Shrine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-logo">
+                <img src="images/logo.jpg" alt="Our Lady of Lourdes Shrine Logo" style="height: 40px; width: auto; border-radius: 50%; margin-right: 10px;">
+                <span>Admin Dashboard</span>
+            </div>
+            <div class="admin-user">
+                <span>Welcome, Admin</span>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a></li>
+                    <li><a href="#about" class="nav-link" data-section="about">
+                        <i class="fas fa-info-circle"></i> Edit About Us
+                    </a></li>
+                    <li><a href="#jubilee-edit" class="nav-link" data-section="jubilee-edit">
+                        <i class="fas fa-star"></i> Edit 125th Jubilee
+                    </a></li>
+                    <li><a href="#substations-edit" class="nav-link" data-section="substations-edit">
+                        <i class="fas fa-map-marker-alt"></i> Edit Substations
+                    </a></li>
+                    <li><a href="#mass-timing" class="nav-link" data-section="mass-timing">
+                        <i class="fas fa-clock"></i> Mass Timing
+                    </a></li>
+                    <li><a href="#madha-malai" class="nav-link" data-section="madha-malai">
+                        <i class="fas fa-mountain"></i> Madha Malai
+                    </a></li>
+                    <li><a href="#gallery" class="nav-link" data-section="gallery">
+                        <i class="fas fa-images"></i> Gallery
+                    </a></li>
+                    <li><a href="#slideshow" class="nav-link" data-section="slideshow">
+                        <i class="fas fa-play-circle"></i> Home Slideshow
+                    </a></li>
+                    <li><a href="#events" class="nav-link" data-section="events">
+                        <i class="fas fa-calendar"></i> Events
+                    </a></li>
+                    <li><a href="#shrine-priests" class="nav-link" data-section="shrine-priests">
+                        <i class="fas fa-church"></i> Shrine Priests
+                    </a></li>
+
+                    <li><a href="#footer" class="nav-link" data-section="footer">
+                        <i class="fas fa-edit"></i> Footer Management
+                    </a></li>
+                    <li><a href="#settings" class="nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i> Settings
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="admin-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+                </div>
+                
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-info">
+                            <h3>Total Visitors</h3>
+                            <span class="stat-number">1,234</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <div class="stat-info">
+                            <h3>Upcoming Events</h3>
+                            <span class="stat-number">5</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-images"></i>
+                        <div class="stat-info">
+                            <h3>Gallery Images</h3>
+                            <span class="stat-number">48</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="dashboard-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="showSection('content')">
+                            <i class="fas fa-edit"></i> Edit Content
+                        </button>
+                        <button class="action-btn" onclick="showSection('events')">
+                            <i class="fas fa-plus"></i> Add Event
+                        </button>
+                        <button class="action-btn" onclick="showSection('gallery')">
+                            <i class="fas fa-upload"></i> Upload Images
+                        </button>
+                        <button class="action-btn" onclick="showSection('mass-timing')">
+                            <i class="fas fa-clock"></i> Update Mass Times
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Us Edit Section -->
+            <section id="about" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Edit About Us</h2>
+                </div>
+
+                <div class="about-tabs">
+                    <button class="tab-btn active" data-tab="content">Content</button>
+                    <button class="tab-btn" data-tab="history">History</button>
+                    <button class="tab-btn" data-tab="images">Images</button>
+                </div>
+
+                <!-- Content Tab -->
+                <div id="content-tab" class="tab-pane active">
+                    <form class="content-form" id="aboutContentForm">
+                        <div class="form-group">
+                            <label>Main Title</label>
+                            <input type="text" id="aboutTitle" value="St. Lourdes Shrine - Chetpet: A Legacy of Faith">
+                        </div>
+                        <div class="form-group">
+                            <label>Page Introduction</label>
+                            <textarea rows="4" id="aboutIntro">Welcome to Our Lady of Lourdes Shrine, a sacred place of prayer and pilgrimage...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Mission Statement</label>
+                            <textarea rows="4" id="aboutMission">To provide a sacred space where all people can encounter the love and healing presence of Our Lady of Lourdes...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Vision Statement</label>
+                            <textarea rows="4" id="aboutVision">To be a center of pilgrimage that inspires faith, promotes healing, and serves as a beacon of hope...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Values Section</label>
+                            <textarea rows="5" id="aboutValues">Our core values guide everything we do: Faith, Hope, Love, Service, and Community...</textarea>
+                        </div>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i> Update About Content
+                        </button>
+                    </form>
+                </div>
+
+                <!-- History Tab -->
+                <div id="history-tab" class="tab-pane">
+                    <form class="content-form" id="aboutHistoryForm">
+                        <div class="form-group">
+                            <label>Historical Overview</label>
+                            <textarea rows="8" id="aboutHistory">The Mission of Chethupattu, under the zealous missionary Priest, Jean Francis Darras, rightly called the Apostle of North Arcot, dates back to 1876...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Foundation Story</label>
+                            <textarea rows="6" id="aboutFoundation">The foundation of our shrine is rooted in deep faith and devotion to Our Lady of Lourdes...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Growth and Development</label>
+                            <textarea rows="6" id="aboutGrowth">Over the decades, the shrine has grown from a small chapel to a major pilgrimage center...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Modern Era</label>
+                            <textarea rows="5" id="aboutModern">Today, our shrine continues to serve thousands of pilgrims and devotees...</textarea>
+                        </div>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i> Update History Content
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Images Tab -->
+                <div id="images-tab" class="tab-pane">
+                    <div class="about-images-section">
+                        <div class="upload-section">
+                            <h3>Add About Us Images</h3>
+                            <form id="aboutImageForm">
+                                <div class="form-group">
+                                    <label>Image Title</label>
+                                    <input type="text" id="aboutImageTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Category</label>
+                                    <select id="aboutImageCategory" required>
+                                        <option value="">Select Category</option>
+                                        <option value="shrine">Shrine Views</option>
+                                        <option value="interior">Interior</option>
+                                        <option value="altar">Altar</option>
+                                        <option value="historical">Historical</option>
+                                        <option value="community">Community</option>
+                                        <option value="events">Events</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Description</label>
+                                    <textarea id="aboutImageDescription" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <input type="file" id="aboutImageUpload" accept="image/*" required>
+                                </div>
+                                <div class="image-preview" id="aboutImagePreview" style="display: none;">
+                                    <img id="aboutPreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-image-btn" onclick="removeAboutImagePreview()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i> Add Image
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="about-images-grid" id="aboutImagesGrid">
+                            <!-- About images will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 125th Jubilee Edit Section -->
+            <section id="jubilee-edit" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-star"></i> Edit 125th Jubilee</h2>
+                </div>
+
+                <div class="jubilee-tabs">
+                    <button class="tab-btn active" data-tab="content">Content</button>
+                    <button class="tab-btn" data-tab="images">Images</button>
+                    <button class="tab-btn" data-tab="timeline">Timeline</button>
+                </div>
+
+                <!-- Content Tab -->
+                <div id="content-tab" class="tab-pane active">
+                    <form class="content-form" id="jubileeContentForm">
+                        <div class="form-group">
+                            <label>Jubilee Main Title</label>
+                            <input type="text" id="jubileeTitle" value="Our Lady of Lourdes Shrine, Chetpet, Celebrates 125 Years of Grace and Devotion">
+                        </div>
+                        <div class="form-group">
+                            <label>Celebration Story Introduction</label>
+                            <textarea rows="4" id="jubileeIntro">Chetpet, Tamil Nadu – Faith, history, and devotion came together in a grand and unforgettable way...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Historic Milestone Section</label>
+                            <textarea rows="6" id="jubileeMilestone">The Shrine of Our Lady of Lourdes at Chetpet holds a unique place in the history of the Catholic Church in Tamil Nadu...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Dignitaries Section</label>
+                            <textarea rows="6" id="jubileeDignitaries">The jubilee celebrations were honored by the presence of Most Rev. Dr. Leopoldo Girelli, Apostolic Nuncio to India...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Blessing Ceremony Section</label>
+                            <textarea rows="5" id="jubileeBlessing">A moment of profound grace was witnessed when the Apostolic Nuncio, together with the Archbishop and bishops...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Messages of Faith Section</label>
+                            <textarea rows="5" id="jubileeMessages">In his address, Most Rev. Dr. Leopoldo Girelli highlighted the universal role of Mary...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Cultural Celebration Section</label>
+                            <textarea rows="4" id="jubileeCultural">Beyond the liturgical celebrations, the jubilee was enriched with cultural programs...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Legacy Section</label>
+                            <textarea rows="4" id="jubileeLegacy">The 125th Jubilee of Our Lady of Lourdes Shrine, Chetpet, stands as a historic and grace-filled moment...</textarea>
+                        </div>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i> Update Jubilee Content
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Images Tab -->
+                <div id="images-tab" class="tab-pane">
+                    <div class="jubilee-images-section">
+                        <div class="upload-section">
+                            <h3>Add Jubilee Images</h3>
+                            <form id="jubileeImageForm">
+                                <div class="form-group">
+                                    <label>Image Title</label>
+                                    <input type="text" id="jubileeImageTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Category</label>
+                                    <select id="jubileeImageCategory" required>
+                                        <option value="">Select Category</option>
+                                        <option value="ceremony">Ceremony</option>
+                                        <option value="dignitaries">Dignitaries</option>
+                                        <option value="blessing">Blessing</option>
+                                        <option value="cultural">Cultural Programs</option>
+                                        <option value="crowd">Congregation</option>
+                                        <option value="historical">Historical</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Description</label>
+                                    <textarea id="jubileeImageDescription" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <input type="file" id="jubileeImageUpload" accept="image/*" required>
+                                </div>
+                                <div class="image-preview" id="jubileeImagePreview" style="display: none;">
+                                    <img id="jubileePreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-image-btn" onclick="removeJubileeImagePreview()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i> Add Image
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="jubilee-images-grid" id="jubileeImagesGrid">
+                            <!-- Jubilee images will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Tab -->
+                <div id="timeline-tab" class="tab-pane">
+                    <div class="timeline-section">
+                        <h3>Jubilee Timeline Events</h3>
+                        <button class="add-btn" onclick="showAddTimelineForm()">
+                            <i class="fas fa-plus"></i> Add Timeline Event
+                        </button>
+
+                        <div class="add-timeline-form" id="addTimelineForm" style="display: none;">
+                            <form id="timelineEventForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Year</label>
+                                        <input type="number" id="timelineYear" min="1899" max="2024" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Event Title</label>
+                                        <input type="text" id="timelineTitle" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Event Description</label>
+                                    <textarea id="timelineDescription" rows="3" required></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="save-btn">
+                                        <i class="fas fa-save"></i> Add Event
+                                    </button>
+                                    <button type="button" class="cancel-btn" onclick="hideAddTimelineForm()">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="timeline-events" id="timelineEvents">
+                            <!-- Timeline events will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Substations Edit Section -->
+            <section id="substations-edit" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-map-marker-alt"></i> Edit Substations</h2>
+                </div>
+
+                <div class="substations-manager">
+                    <div class="substation-item">
+                        <h3>St. Joseph Chapel</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Chapel Name</label>
+                                <input type="text" value="St. Joseph Chapel">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" value="Chetpet East">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea rows="3">A beautiful chapel serving the eastern part of Chetpet community...</textarea>
+                        </div>
+                    </div>
+
+                    <div class="substation-item">
+                        <h3>Sacred Heart Chapel</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Chapel Name</label>
+                                <input type="text" value="Sacred Heart Chapel">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" value="Chetpet West">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea rows="3">Dedicated to the Sacred Heart of Jesus, serving the western community...</textarea>
+                        </div>
+                    </div>
+
+                    <div class="substation-item">
+                        <h3>St. Anthony Chapel</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Chapel Name</label>
+                                <input type="text" value="St. Anthony Chapel">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" value="Chetpet South">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea rows="3">A place of devotion to St. Anthony, serving the southern area...</textarea>
+                        </div>
+                    </div>
+
+                    <button type="button" class="save-btn">
+                        <i class="fas fa-save"></i> Update All Substations
+                    </button>
+                </div>
+            </section>
+
+            <!-- Mass Timing Section -->
+            <section id="mass-timing" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clock"></i> Mass Timing Management</h2>
+                </div>
+                
+                <form class="mass-timing-form">
+                    <div class="timing-grid">
+                        <div class="timing-group">
+                            <h3>Weekdays</h3>
+                            <div class="time-inputs">
+                                <input type="time" value="06:00" id="weekday1">
+                                <input type="time" value="19:00" id="weekday2">
+                                <button type="button" class="add-time-btn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="timing-group">
+                            <h3>Sundays</h3>
+                            <div class="time-inputs">
+                                <input type="time" value="06:00" id="sunday1">
+                                <input type="time" value="08:00" id="sunday2">
+                                <input type="time" value="19:00" id="sunday3">
+                                <button type="button" class="add-time-btn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="timing-group">
+                            <h3>Special Days</h3>
+                            <div class="special-days">
+                                <input type="text" placeholder="Occasion" class="occasion-input">
+                                <input type="time" class="time-input">
+                                <button type="button" class="add-special-btn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i> Update Mass Timings
+                    </button>
+                </form>
+            </section>
+
+            <!-- Madha Malai Edit Section -->
+            <section id="madha-malai" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-mountain"></i> Edit Madha Malai</h2>
+                </div>
+
+                <div class="madha-malai-tabs">
+                    <button class="tab-btn active" data-tab="content">Content</button>
+                    <button class="tab-btn" data-tab="pilgrimage">Pilgrimage Info</button>
+                    <button class="tab-btn" data-tab="images">Images</button>
+                    <button class="tab-btn" data-tab="facilities">Facilities</button>
+                </div>
+
+                <!-- Content Tab -->
+                <div id="content-tab" class="tab-pane active">
+                    <form class="content-form" id="madhaMalaiContentForm">
+                        <div class="form-group">
+                            <label>Page Title</label>
+                            <input type="text" id="madhaMalaiTitle" value="Madha Malai - Sacred Hill of Our Lady">
+                        </div>
+                        <div class="form-group">
+                            <label>Introduction</label>
+                            <textarea rows="6" id="madhaMalaiIntro">Madha Malai, meaning "Mother's Hill," is a sacred pilgrimage site dedicated to Our Lady of Lourdes...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>History</label>
+                            <textarea rows="8" id="madhaMalaiHistory">The history of Madha Malai dates back to the early 20th century when devotees began making pilgrimages...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Spiritual Significance</label>
+                            <textarea rows="6" id="madhaMalaiSignificance">Madha Malai holds deep spiritual significance for devotees of Our Lady of Lourdes...</textarea>
+                        </div>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i> Update Content
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Pilgrimage Info Tab -->
+                <div id="pilgrimage-tab" class="tab-pane">
+                    <form class="content-form" id="madhaMalaiPilgrimageForm">
+                        <div class="form-group">
+                            <label>Pilgrimage Overview</label>
+                            <textarea rows="6" id="madhaMalaiPilgrimage">Pilgrims from across Tamil Nadu and beyond visit Madha Malai throughout the year...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Best Time to Visit</label>
+                            <textarea rows="4" id="madhaMalaiBestTime">The ideal time for pilgrimage to Madha Malai is during the cooler months...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Pilgrimage Route</label>
+                            <textarea rows="5" id="madhaMalaiRoute">The pilgrimage route to Madha Malai begins from the main shrine...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Special Events</label>
+                            <textarea rows="5" id="madhaMalaiEvents">Throughout the year, Madha Malai hosts several special religious events...</textarea>
+                        </div>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i> Update Pilgrimage Info
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Images Tab -->
+                <div id="images-tab" class="tab-pane">
+                    <div class="madha-malai-images-section">
+                        <div class="upload-section">
+                            <h3>Add Madha Malai Images</h3>
+                            <form id="madhaMalaiImageForm">
+                                <div class="form-group">
+                                    <label>Image Title</label>
+                                    <input type="text" id="madhaMalaiImageTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Category</label>
+                                    <select id="madhaMalaiImageCategory" required>
+                                        <option value="">Select Category</option>
+                                        <option value="landscape">Landscape Views</option>
+                                        <option value="shrine">Shrine Views</option>
+                                        <option value="pilgrimage">Pilgrimage</option>
+                                        <option value="events">Special Events</option>
+                                        <option value="nature">Natural Beauty</option>
+                                        <option value="facilities">Facilities</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Description</label>
+                                    <textarea id="madhaMalaiImageDescription" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <input type="file" id="madhaMalaiImageUpload" accept="image/*" required>
+                                </div>
+                                <div class="image-preview" id="madhaMalaiImagePreview" style="display: none;">
+                                    <img id="madhaMalaiPreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-image-btn" onclick="removeMadhaMalaiImagePreview()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i> Add Image
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="madha-malai-images-grid" id="madhaMalaiImagesGrid">
+                            <!-- Madha Malai images will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Facilities Tab -->
+                <div id="facilities-tab" class="tab-pane">
+                    <form class="content-form" id="madhaMalaiFacilitiesForm">
+                        <div class="form-group">
+                            <label>Accommodation</label>
+                            <textarea rows="5" id="madhaMalaiAccommodation">Accommodation facilities available for pilgrims...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Dining Facilities</label>
+                            <textarea rows="4" id="madhaMalaiDining">Simple vegetarian meals are available for pilgrims...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Transportation</label>
+                            <textarea rows="4" id="madhaMalaiTransportation">Transportation options to reach Madha Malai...</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Other Facilities</label>
+                            <textarea rows="5" id="madhaMalaiOtherFacilities">Additional facilities and services available...</textarea>
+                        </div>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i> Update Facilities Info
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Gallery Management Section -->
+            <section id="gallery" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-images"></i> Gallery Management</h2>
+                </div>
+
+                <div class="gallery-controls">
+                    <button class="add-btn" onclick="showAddAlbumForm()">
+                        <i class="fas fa-plus"></i> Create New Album
+                    </button>
+                    <button class="add-btn" onclick="showAddImageForm()">
+                        <i class="fas fa-image"></i> Add Images to Album
+                    </button>
+                </div>
+
+                <!-- Add Album Form -->
+                <div class="add-album-form" id="addAlbumForm" style="display: none;">
+                    <h3>Create New Album</h3>
+                    <form id="albumForm">
+                        <div class="form-group">
+                            <label>Album Name</label>
+                            <input type="text" id="albumName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Album Description</label>
+                            <textarea id="albumDescription" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Create Album
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideAddAlbumForm()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add Images Form -->
+                <div class="add-image-form" id="addImageForm" style="display: none;">
+                    <h3>Add Images to Album</h3>
+                    <form id="imageForm">
+                        <div class="form-group">
+                            <label>Select Album</label>
+                            <select id="selectAlbum" required>
+                                <option value="">Choose Album</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Images (Multiple)</label>
+                            <input type="file" id="imageUpload" accept="image/*" multiple required>
+                        </div>
+                        <div class="image-preview-container" id="imagePreviewContainer">
+                            <!-- Image previews will appear here -->
+                        </div>
+                        <div class="form-group">
+                            <label>Image Descriptions (Optional)</label>
+                            <textarea id="imageDescriptions" rows="3" placeholder="Enter descriptions separated by commas for each image"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Add Images
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideAddImageForm()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Albums Display -->
+                <div class="albums-container">
+                    <div class="albums-grid" id="albumsGrid">
+                        <!-- Albums will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Selected Album Images -->
+                <div class="album-images-container" id="albumImagesContainer" style="display: none;">
+                    <div class="album-header">
+                        <h3 id="selectedAlbumTitle"></h3>
+                        <button class="back-btn" onclick="showAllAlbums()">
+                            <i class="fas fa-arrow-left"></i> Back to Albums
+                        </button>
+                    </div>
+                    <div class="images-grid" id="albumImagesGrid">
+                        <!-- Album images will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slideshow Management Section -->
+            <section id="slideshow" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-play-circle"></i> Home Page Slideshow Management</h2>
+                </div>
+
+                <div class="slideshow-controls">
+                    <button class="add-btn" onclick="showAddSlideForm()">
+                        <i class="fas fa-plus"></i> Add New Slide
+                    </button>
+                </div>
+
+                <!-- Add Slide Form -->
+                <div class="add-slide-form" id="addSlideForm" style="display: none;">
+                    <h3>Add New Slide</h3>
+                    <form id="slideForm">
+                        <div class="form-group">
+                            <label>Slide Title</label>
+                            <input type="text" id="slideTitle" required placeholder="Enter slide title">
+                        </div>
+                        <div class="form-group">
+                            <label>Slide Description</label>
+                            <textarea id="slideDescription" rows="3" placeholder="Enter slide description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Slide Image</label>
+                            <input type="file" id="slideImage" accept="image/*" required>
+                        </div>
+                        <div class="slide-image-preview" id="slideImagePreview" style="display: none;">
+                            <img id="slidePreviewImg" alt="Slide Preview">
+                            <button type="button" class="remove-preview-btn" onclick="removeSlideImagePreview()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label>Button Text (Optional)</label>
+                            <input type="text" id="slideButtonText" placeholder="e.g., Learn More, Visit Us">
+                        </div>
+                        <div class="form-group">
+                            <label>Button Link (Optional)</label>
+                            <input type="text" id="slideButtonLink" placeholder="e.g., about.html, #contact">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Add Slide
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideAddSlideForm()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Edit Slide Form -->
+                <div class="edit-slide-form" id="editSlideForm" style="display: none;">
+                    <h3>Edit Slide</h3>
+                    <form id="editSlideFormElement">
+                        <input type="hidden" id="editSlideId">
+                        <div class="form-group">
+                            <label>Slide Title</label>
+                            <input type="text" id="editSlideTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Slide Description</label>
+                            <textarea id="editSlideDescription" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Slide Image</label>
+                            <input type="file" id="editSlideImage" accept="image/*">
+                            <small>Leave empty to keep current image</small>
+                        </div>
+                        <div class="slide-image-preview" id="editSlideImagePreview" style="display: none;">
+                            <img id="editSlidePreviewImg" alt="Slide Preview">
+                            <button type="button" class="remove-preview-btn" onclick="removeEditSlideImagePreview()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label>Button Text (Optional)</label>
+                            <input type="text" id="editSlideButtonText">
+                        </div>
+                        <div class="form-group">
+                            <label>Button Link (Optional)</label>
+                            <input type="text" id="editSlideButtonLink">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Update Slide
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideEditSlideForm()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Slides Display -->
+                <div class="slides-container">
+                    <div class="slides-list" id="slidesList">
+                        <!-- Slides will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Events Management Section -->
+            <section id="events" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar"></i> Events Management</h2>
+                    <button class="add-event-btn" onclick="showAddEventForm()">
+                        <i class="fas fa-plus"></i> Add New Event
+                    </button>
+                </div>
+
+                <div id="addEventForm" class="event-form" style="display: none;">
+                    <form id="eventForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Event Title</label>
+                                <input type="text" id="eventTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Event Date</label>
+                                <input type="date" id="eventDate" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Event Time</label>
+                                <input type="time" id="eventTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" id="eventLocation">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="eventDescription" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Category</label>
+                            <select id="eventCategory">
+                                <option value="religious">Religious</option>
+                                <option value="community">Community</option>
+                                <option value="youth">Youth</option>
+                                <option value="special">Special</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Image</label>
+                            <div class="event-image-upload">
+                                <input type="file" id="eventImageUpload" accept="image/*">
+                                <div class="image-preview" id="eventImagePreview" style="display: none;">
+                                    <img id="previewImg" src="" alt="Event Preview">
+                                    <button type="button" class="remove-image-btn" onclick="removeEventImage()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Save Event
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideAddEventForm()">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="events-list" id="eventsList">
+                    <!-- Events will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Shrine Priests Management Section -->
+            <section id="shrine-priests" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-church"></i> Shrine Priests Management</h2>
+                </div>
+
+                <div class="priests-controls">
+                    <button class="add-btn" onclick="showAddPriestForm()">
+                        <i class="fas fa-plus"></i> Add New Priest
+                    </button>
+                </div>
+
+                <!-- Add Priest Form -->
+                <div class="add-priest-form" id="addPriestForm" style="display: none;">
+                    <h3>Add New Priest</h3>
+                    <form id="priestForm">
+                        <div class="form-group">
+                            <label>Priest Name</label>
+                            <input type="text" id="priestName" required placeholder="Rev. Fr. [Name]">
+                        </div>
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <select id="priestDesignation" required>
+                                <option value="">Select Designation</option>
+                                <option value="parish-priest-rector">Parish Priest & Rector</option>
+                                <option value="administrator-madha-hill">Administrator of Madha Hill</option>
+                                <option value="assistant-parish-priest">Assistant Parish Priest</option>
+                                <option value="spiritual-director">Spiritual Director</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>About the Priest</label>
+                            <textarea id="priestAbout" rows="4" placeholder="Brief description about the priest's background and service"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Information (Optional)</label>
+                            <input type="text" id="priestContact" placeholder="Phone or email for specific inquiries">
+                        </div>
+                        <div class="form-group">
+                            <label>Priest Photo</label>
+                            <input type="file" id="priestPhoto" accept="image/*" required>
+                        </div>
+                        <div class="image-preview" id="priestImagePreview" style="display: none;">
+                            <img id="priestPreviewImg" src="" alt="Preview">
+                            <button type="button" class="remove-image-btn" onclick="removePriestImagePreview()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Add Priest
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideAddPriestForm()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Edit Priest Form -->
+                <div class="edit-priest-form" id="editPriestForm" style="display: none;">
+                    <h3>Edit Priest Information</h3>
+                    <form id="editPriestFormElement">
+                        <input type="hidden" id="editPriestId">
+                        <div class="form-group">
+                            <label>Priest Name</label>
+                            <input type="text" id="editPriestName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <select id="editPriestDesignation" required>
+                                <option value="">Select Designation</option>
+                                <option value="parish-priest-rector">Parish Priest & Rector</option>
+                                <option value="administrator-madha-hill">Administrator of Madha Hill</option>
+                                <option value="assistant-parish-priest">Assistant Parish Priest</option>
+                                <option value="spiritual-director">Spiritual Director</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>About the Priest</label>
+                            <textarea id="editPriestAbout" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Information</label>
+                            <input type="text" id="editPriestContact">
+                        </div>
+                        <div class="form-group">
+                            <label>Update Priest Photo (Optional)</label>
+                            <input type="file" id="editPriestPhoto" accept="image/*">
+                        </div>
+                        <div class="image-preview" id="editPriestImagePreview" style="display: none;">
+                            <img id="editPriestPreviewImg" src="" alt="Preview">
+                            <button type="button" class="remove-image-btn" onclick="removeEditPriestImagePreview()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Update Priest
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideEditPriestForm()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Priests List -->
+                <div class="priests-list" id="priestsList">
+                    <!-- Priests will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Footer Management Section -->
+            <section id="footer" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-edit"></i> Footer Management</h2>
+                </div>
+
+                <div class="footer-management">
+                    <div class="footer-tabs">
+                        <button class="tab-btn active" data-tab="contact">Contact Information</button>
+                        <button class="tab-btn" data-tab="quicklinks">Quick Links</button>
+                        <button class="tab-btn" data-tab="social">Social Media</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <!-- Contact Information Tab -->
+                        <div id="contact-tab" class="tab-pane active">
+                            <form class="footer-form">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea id="footerAddress" rows="3">Our Lady of Lourdes Shrine
+Chetpet, Tiruvannamalai Dt - 606 801</textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Phone Number</label>
+                                        <input type="text" id="footerPhone" value="+91 9442291509, +91 6374827409">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" id="footerEmail" value="ourladyoflourdesshrinechetpet@gmail.com">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Office Hours</label>
+                                    <textarea id="officeHours" rows="2">Monday - Saturday: 9:00 AM - 5:00 PM
+Sunday: After Mass Services</textarea>
+                                </div>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i> Update Contact Info
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Quick Links Tab -->
+                        <div id="quicklinks-tab" class="tab-pane">
+                            <form class="footer-form">
+                                <div class="quick-links-manager">
+                                    <h3>Manage Quick Links</h3>
+                                    <div id="quickLinksList">
+                                        <div class="quick-link-item">
+                                            <input type="text" placeholder="Link Title" value="Mass Timings">
+                                            <input type="text" placeholder="Link URL" value="mass-timing.html">
+                                            <button type="button" class="remove-link-btn">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="quick-link-item">
+                                            <input type="text" placeholder="Link Title" value="Madha Malai">
+                                            <input type="text" placeholder="Link URL" value="madha-malai.html">
+                                            <button type="button" class="remove-link-btn">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <button type="button" class="add-link-btn" onclick="addQuickLink()">
+                                        <i class="fas fa-plus"></i> Add New Link
+                                    </button>
+                                </div>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i> Update Quick Links
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Social Media Tab -->
+                        <div id="social-tab" class="tab-pane">
+                            <form class="footer-form" id="socialMediaForm">
+                                <div class="form-group">
+                                    <label>Facebook URL</label>
+                                    <input type="url" id="facebookUrl" placeholder="https://facebook.com/yourpage">
+                                    <small class="form-help">Enter your Facebook page URL</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Instagram URL</label>
+                                    <input type="url" id="instagramUrl" placeholder="https://instagram.com/yourpage">
+                                    <small class="form-help">Enter your Instagram profile URL</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>YouTube URL</label>
+                                    <input type="url" id="youtubeUrl" placeholder="https://youtube.com/yourchannel">
+                                    <small class="form-help">Enter your YouTube channel URL</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Twitter URL</label>
+                                    <input type="url" id="twitterUrl" placeholder="https://twitter.com/yourpage">
+                                    <small class="form-help">Enter your Twitter profile URL</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>WhatsApp Number</label>
+                                    <input type="tel" id="whatsappNumber" placeholder="+91 9442291509">
+                                    <small class="form-help">Enter WhatsApp number with country code</small>
+                                </div>
+                                <button type="submit" class="save-btn" id="saveSocialMediaBtn">
+                                    <i class="fas fa-save"></i> Update Social Media Links
+                                </button>
+                            </form>
+
+                            <div class="social-preview">
+                                <h4>Preview:</h4>
+                                <div class="social-links-preview" id="socialLinksPreview">
+                                    <a href="#" id="previewFacebook" class="social-link" style="display: none;">
+                                        <i class="fab fa-facebook"></i>
+                                    </a>
+                                    <a href="#" id="previewInstagram" class="social-link" style="display: none;">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#" id="previewYoutube" class="social-link" style="display: none;">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                    <a href="#" id="previewTwitter" class="social-link" style="display: none;">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" id="previewWhatsapp" class="social-link" style="display: none;">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
